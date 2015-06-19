@@ -124,15 +124,10 @@ class taglinker{
         $tags = get_tags();
             foreach ($tags as $tag):
                 if((get_option(self::tagposts_on) and is_single()) or (get_option(self::tagpages_on) and is_page())):
-                    $content = preg_replace('/ '.$tag->name.' /', ' <a class="'.get_option(self::tagclass_on).'" style="'.get_option(self::tagstyle_on).'" rel="tag" href="'.get_tag_link($tag->term_id).'">'.$tag->name.'</a> ', $content);
+                    $content = preg_replace('/ '.$tag->name.' /', ' <a class="'.get_option(self::tagclass_on).'" style="'.get_option(self::tagstyle_on).'" rel="tag" title="'.strip_tags(tag_description($tag->term_id)).'" href="'.get_tag_link($tag->term_id).'">'.$tag->name.'</a> ', $content);
                 endif;
             endforeach;
         return $content;
-    }
-    
-    public static function pr_callback(){
-        self::$i ++;
-        return ' <a style="'.get_option(self::tagstyle_on).'" rel="tag" href="'.get_tag_link(self::$taglinker_tagid).'">'.self::$taglinker_tagname.'</a> ';
     }
     
     public static function load_textdomain(){
